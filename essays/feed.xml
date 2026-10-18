@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Vibe Nursing essays</title>
+<link>https://vibenursing.com/essays/</link>
+<atom:link href="https://vibenursing.com/essays/feed.xml" rel="self" type="application/rss+xml"/>
+<description>On residencies, boards and the first year of nursing, from the people building Vibe Nursing.</description>
+<language>en-us</language>
+<lastBuildDate>Sun, 18 Oct 2026 12:00:00 GMT</lastBuildDate>
+<item><title>Why I built Vibe Nursing</title><link>https://vibenursing.com/essays/why-i-built-vibe-nursing.html</link><guid>https://vibenursing.com/essays/why-i-built-vibe-nursing.html</guid><pubDate>Sun, 18 Oct 2026 12:00:00 GMT</pubDate><description>Two problems I lived through in nursing school, and the app I built so the students coming after me don’t have to.</description></item>
+</channel>
+</rss>
