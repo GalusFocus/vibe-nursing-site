@@ -285,24 +285,41 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 .board-np .chips li { background: rgba(255,255,255,.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
 .js .board.reveal { transition-delay: calc(var(--d) * 90ms); }
 
-/* ── how it works ── */
-.how { padding: 150px 0 60px; }
+/* ── how it works: a patient chart. Each step is a page with a divider tab; scrolling lays the next page
+   over the last, and the pages before it stay filed behind as tabs you can still read. Pure CSS (sticky);
+   client.js only adds the depth, a page shrinking a little and fading as the next one covers it. ── */
+.how { padding: 150px 0 120px; }
 .how-hd { text-align: center; }
-.how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
-.steps { list-style: none; margin: 0; padding: 0; position: relative; }
-.steps::before { content: ""; position: absolute; left: 21px; top: 34vh; bottom: 34vh; width: 1px; background: linear-gradient(var(--line), #D6E4DF 20%, #D6E4DF 80%, var(--line)); }
-.step { min-height: 68vh; display: grid; grid-template-columns: 42px minmax(0, 440px); column-gap: 22px; align-content: center; align-items: start; opacity: .32; transition: opacity .5s var(--ease); }
-.step.is-on { opacity: 1; }
-.step.is-on .num { background: var(--ever); color: #fff; border-color: var(--ever); box-shadow: 0 0 0 6px var(--paper); }
-.num { position: relative; z-index: 1; transition: background-color .4s, color .4s, border-color .4s; flex: none; margin-top: -3px; font: 500 14px/1 "Inter Tight", sans-serif; color: var(--ever); letter-spacing: .02em; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid #CFE0DA; background: var(--paper); }
-.step .h3 { font-size: clamp(26px, 2.5vw, 34px); line-height: 1.08; letter-spacing: -.035em; font-weight: 500; }
-.step .body { margin-top: 12px; font-size: 18px; }
-.step-phone { display: none; }
-.stage { position: relative; }
-.stage-in { position: sticky; top: 84px; height: calc(100vh - 100px); min-height: 460px; display: grid; place-items: center; }
-.stage .phone { --pw: min(314px, calc((100vh - 150px) * .476)); }
-.stack .layer { position: absolute; left: 0; top: 54em; opacity: 0; transform: scale(1.025); transition: opacity .55s var(--ease), transform .8s var(--ease); }
-.stack .layer.is-on { opacity: 1; transform: none; }
+.charts { --top: 96px; --tab: 74px; --gap: 18vh; --h: min(600px, calc(100vh - var(--top) - (var(--n) - 1) * var(--tab) - 28px));
+  list-style: none; margin: 56px auto 0; padding: 0; max-width: 1060px; }
+.chart { --u: 0; position: sticky; top: calc(var(--top) + var(--i) * var(--tab)); height: var(--h); min-height: 380px; margin-bottom: var(--gap);
+  border-radius: 30px; overflow: hidden; background: var(--card); color: var(--ink);
+  box-shadow: 0 0 0 1px rgba(16,32,27,.06), 0 -22px 50px -30px rgba(16,32,27,.32);
+  transform-origin: 50% 0; transform: scale(calc(1 - .045 * var(--u))); }
+.chart:last-child { margin-bottom: 0; }
+.chart.c2 { background: #EAF2EF; }
+.chart.c3 { background: var(--paper2); }
+.chart.c4 { background: var(--ever3); color: #EAF4F1; }
+.chart-tab { height: var(--tab); display: flex; align-items: center; gap: 18px; padding: 0 34px; border-bottom: 1px solid rgba(16,32,27,.08); }
+.c4 .chart-tab { border-bottom-color: rgba(255,255,255,.1); }
+.num { flex: none; font: 500 14px/1 "Inter Tight", sans-serif; color: var(--ever); letter-spacing: .02em; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid #CFE0DA; background: var(--paper); transition: background-color .4s, color .4s, border-color .4s; }
+.chart .num { margin: 0; background: var(--card); }
+.chart.c2 .num, .chart.c3 .num { background: rgba(255,255,255,.7); }
+.chart.c4 .num { background: transparent; color: var(--mint); border-color: rgba(168,230,214,.45); }
+.chart.is-on .num { background: var(--ever); color: #fff; border-color: var(--ever); }
+.chart.c4.is-on .num { background: var(--mint); color: var(--ever3); border-color: var(--mint); }
+.chart-tab .h3 { margin: 0; flex: 1; min-width: 0; font-size: clamp(22px, 2.3vw, 30px); line-height: 1.1; letter-spacing: -.03em; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chart-tab .tag { flex: none; padding: 0; border-radius: 0; background: none; font: 600 12px/1 Inter, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--ever); opacity: .8; }
+.c4 .chart-tab .tag { color: var(--mint); }
+.c4 .chart-tab .h3 { color: #fff; }
+.chart-page { height: calc(100% - var(--tab)); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; padding: 40px 34px 0 82px; opacity: calc(1 - .8 * var(--u)); }
+.chart-tx .body { margin: 0; max-width: 430px; font-size: 19px; line-height: 1.55; color: inherit; opacity: .82; }
+.chart .chips { margin: 26px 0 0; gap: 8px; max-width: 460px; }
+.chart .chips li { font: 500 14px/1 Inter, sans-serif; letter-spacing: 0; padding: 9px 13px; background: rgba(255,255,255,.72); box-shadow: inset 0 0 0 1px rgba(16,32,27,.08); color: var(--ink2); }
+.chart.c1 .chips li { background: var(--paper); }
+.chart.c4 .chips li { background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); color: #CFE6DF; }
+.chart-shot { align-self: stretch; overflow: hidden; -webkit-mask-image: linear-gradient(#000 76%, transparent); mask-image: linear-gradient(#000 76%, transparent); }
+.chart-shot .phone { --pw: 286px; }
 .stack .screen { transition: background-color .5s; }
 
 /* ── reach ── */
@@ -432,13 +449,18 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 @media (max-width: 900px) {
   .cards, .trio-cards, .board-grid { grid-template-columns: 1fr; }
   .card { min-height: 0; }
-  .how-grid { grid-template-columns: 1fr; }
-  .stage { display: none; }
-  .step { min-height: 0; opacity: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 46px 0; border-top: 1px solid var(--line); }
-  .step:first-child { border-top: 0; }
-  .steps::before { display: none; }
-  .step-phone { display: block; align-self: center; margin-top: 16px; height: 470px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
-  .step-phone .phone { --pw: 270px; }
+  .charts { --top: 82px; --tab: 60px; --gap: 14vh; --h: calc(100svh - var(--top) - (var(--n) - 1) * var(--tab) - 16px); margin-top: 40px; }
+  .chart { min-height: 0; border-radius: 26px; }
+  .chart-tab { padding: 0 20px; gap: 14px; }
+  .chart-tab .h3 { font-size: 19px; }
+  .chart-tab .tag { display: none; }
+  .chart .num { width: 36px; height: 36px; font-size: 13px; }
+  .chart-page { grid-template-columns: 1fr; gap: 0; padding: 20px 20px 0; grid-template-rows: auto minmax(0, 1fr); }
+  .chart-tx .body { font-size: 16px; }
+  .chart .chips { margin-top: 14px; gap: 6px; }
+  .chart .chips li { font-size: 12.5px; padding: 7px 10px; }
+  .chart-shot { justify-self: center; margin-top: 18px; }
+  .chart-shot .phone { --pw: 236px; }
   .reach-in, .faq-in { grid-template-columns: 1fr; gap: 40px; }
   .story-card { grid-template-columns: 1fr; gap: 28px; padding: 56px 44px; }
   .faq .h2 { position: static; }
@@ -482,10 +504,18 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
   .ans { padding-right: 8px; }
 }
 
+@media (max-height: 560px) {
+  .chart { position: relative; top: auto; height: auto; min-height: 0; margin-bottom: 18px; transform: none; }
+  .chart-page { height: auto; opacity: 1; padding-bottom: 30px; }
+  .chart-shot { max-height: 420px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .js .rise, .js .reveal, .js .notes .note, .js .map .tile, .js .trio .phone, .js .hero-note { opacity: 1 !important; transform: none; filter: none; translate: none; }
+  /* the pages still file behind each other (that is just scrolling); they only stop shrinking */
+  .chart { transform: none; }
   .mq { animation: none; }
 }
 /* the essays: a reading column in the site's own type */
