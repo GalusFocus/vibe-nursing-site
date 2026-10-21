@@ -83,37 +83,56 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 .btn-light { background: #fff; color: var(--ever3); }
 .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
 
-/* ── the waitlist (Galus, 20 October 2026): one white pill, the email and the button in it, and a line under it that
-   says what happens and, once sent, what happened. Without a script only the line shows. ── */
+/* ── the waitlist (Galus, 20 October 2026; redrawn the same night: "nice but not aesthetic"). It starts as the hero's
+   own dark pill, Join the iPhone waitlist, beside How it works. Pressed, the pill opens into a white field with a round
+   arrow to send; sent, it becomes a soft green "You're on the list". Without a script only "Coming soon" shows. ── */
 .vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.wl { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(470px, 100%); margin: 0; }
-.wl-row { display: flex; align-items: center; gap: 6px; width: 100%; padding: 4px; border-radius: 999px; background: #fff; border: 1px solid var(--line);
-  box-shadow: 0 12px 30px -18px rgba(10,30,25,.4); transition: border-color .2s, box-shadow .2s; }
-.wl-row:focus-within { border-color: var(--ever); box-shadow: 0 0 0 3px rgba(14,95,85,.16), 0 12px 30px -18px rgba(10,30,25,.4); }
-.wl-in { flex: 1; min-width: 0; height: 44px; padding: 0 6px 0 18px; border: 0; background: transparent; color: var(--ink); font: 400 16px/1 Inter, sans-serif; letter-spacing: -.005em; outline: none; }
+.wl { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 0; max-width: 100%; }
+.wl-open { cursor: pointer; border: 0; }
+button.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 30px -12px rgba(10,30,25,.55); }
+.wl-row { display: none; align-items: center; gap: 8px; height: 54px; padding: 4px 4px 4px 24px; border-radius: 999px; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 14px 30px -20px rgba(10,30,25,.45); transition: border-color .25s, box-shadow .25s; }
+.wl.is-open .wl-open { display: none; }
+.wl.is-open .wl-row { display: flex; width: min(430px, calc(100vw - 40px)); animation: wl-grow .55s var(--ease) both; }
+@keyframes wl-grow { from { width: var(--from, 240px); background: #0F1C18; border-color: #0F1C18; } 40% { background: #fff; } }
+.wl-row:focus-within { border-color: rgba(14,95,85,.5); box-shadow: 0 0 0 4px rgba(14,95,85,.12), 0 14px 30px -20px rgba(10,30,25,.45); }
+.wl-in { flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent; color: var(--ink); font: 400 16px/1 Inter, sans-serif; letter-spacing: -.005em; outline: none; }
 .wl-in::placeholder { color: var(--ink3); opacity: 1; }
-.wl .wl-go { height: 44px; padding: 0 20px; font-size: 15.5px; border: 0; cursor: pointer; }
-.wl .wl-go:hover { background: #142a23; }
-.wl .wl-go:disabled { opacity: .72; cursor: progress; }
+.wl-go { flex: none; display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); transition: background-color .25s, transform .25s var(--ease); }
+.wl-go:hover { background: var(--ever); }
+.wl-go .i { width: 20px; height: 20px; transition: transform .3s var(--ease); }
+.wl-go:hover .i { transform: translateX(2px); }
+.wl-go:disabled { cursor: progress; }
+.wl[data-state="sending"] .wl-go .i { animation: wl-nudge .9s ease-in-out infinite; }
+@keyframes wl-nudge { 50% { transform: translateX(4px); opacity: .55; } }
 .wl-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-.wl-say { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 0; font-size: 14.5px; line-height: 1.4; color: var(--ink2); text-align: center; outline: none; }
+.wl-say { display: none; align-items: center; justify-content: center; gap: 8px; margin: 0; max-width: 430px; font-size: 14px; line-height: 1.45; color: var(--ink3); text-align: center; outline: none; }
 .wl-say span { text-wrap: balance; }
-.wl-say .i { width: 17px; height: 17px; color: var(--ink3); }
-.wl-say .i-ok, .wl[data-state]:not([data-state="idle"]) .wl-say .i-soon { display: none; }
-.wl[data-state="invalid"] .wl-row { border-color: var(--coral2); }
+.wl-say .i { width: 18px; height: 18px; flex: none; }
+.wl-say .i-soon, .wl-say .i-ok { display: none; }
+.wl.is-open .wl-say, .wl.is-done .wl-say { display: inline-flex; }
+.wl[data-state="invalid"] .wl-row { border-color: rgba(232,93,61,.6); box-shadow: 0 0 0 4px rgba(232,93,61,.1); }
 .wl[data-state="invalid"] .wl-say, .wl[data-state="error"] .wl-say, .wl[data-state="slow_down"] .wl-say { color: #B4432A; }
-.wl.is-done .wl-row { display: none; }
-.wl.is-done .wl-say { min-height: 54px; padding: 8px 24px; border-radius: 999px; background: var(--soft); color: var(--ever2); font-size: 15.5px; font-weight: 500; }
+.wl.is-done .wl-open, .wl.is-done .wl-row { display: none; }
+.wl.is-done .wl-say { max-width: calc(100vw - 40px); min-height: 54px; padding: 10px 24px; border-radius: 999px; background: var(--soft); color: var(--ever2); font-size: 15.5px; font-weight: 500; animation: wl-done .5s var(--ease) both; }
+.wl.is-done .wl-say span { text-wrap: pretty; }
 .wl.is-done .wl-say .i-ok { display: block; width: 20px; height: 20px; color: var(--ever); }
-html:not(.js) .wl-row { display: none; }
-.get-card .wl .wl-go { background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+@keyframes wl-done { from { opacity: 0; transform: scale(.96); } }
+html:not(.js) .wl-open, html:not(.js) .wl-row { display: none; }
+html:not(.js) .wl-say { display: inline-flex; min-height: 54px; padding: 0 22px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.55); color: var(--ink2); font-size: 15px; }
+html:not(.js) .wl-say .i-soon { display: block; }
 .get-card .wl-row { border-color: transparent; box-shadow: 0 18px 36px -18px rgba(0,0,0,.55); }
-.get-card .wl-row:focus-within { box-shadow: 0 0 0 3px rgba(168,230,214,.45), 0 18px 36px -18px rgba(0,0,0,.55); }
-.get-card .wl-say { color: rgba(255,255,255,.74); }
-.get-card .wl-say .i { color: rgba(255,255,255,.6); }
+.get-card .wl-row:focus-within { border-color: transparent; box-shadow: 0 0 0 4px rgba(168,230,214,.35), 0 18px 36px -18px rgba(0,0,0,.55); }
+.get-card .wl-go:hover { background: var(--ever); }
+.get-card button.btn-dark:hover { background: #F2F7F5; transform: translateY(-1px); box-shadow: 0 18px 34px -14px rgba(0,0,0,.55); }
+.get-card .wl-say { color: rgba(255,255,255,.7); }
 .get-card .wl.is-done .wl-say { background: rgba(168,230,214,.14); color: var(--mint); }
 .get-card .wl.is-done .wl-say .i-ok { color: var(--mint); }
 .get-card .wl[data-state="invalid"] .wl-say, .get-card .wl[data-state="error"] .wl-say, .get-card .wl[data-state="slow_down"] .wl-say { color: #FFC3B4; }
+.get-card .wl[data-state="invalid"] .wl-row { box-shadow: 0 0 0 4px rgba(255,195,180,.35); }
+html:not(.js) .get-card .wl-say { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
+@media (prefers-reduced-motion: reduce) { .wl.is-open .wl-row, .wl.is-done .wl-say, .wl[data-state="sending"] .wl-go .i { animation: none; } }
 
 /* ── nav ── */
 .nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background-color .3s, box-shadow .3s, backdrop-filter .3s; }
@@ -507,9 +526,8 @@ html:not(.js) .wl-row { display: none; }
   .ctas { margin-top: 26px; }
   .btn { height: 52px; padding: 0 22px; font-size: 15.5px; }
   .nav .btn-sm { height: 38px; padding: 0 14px; font-size: 14px; }
-  .wl .wl-go { padding: 0 16px; font-size: 15px; }
-  .wl-in { padding-left: 16px; }
-  .wl-say { font-size: 14px; }
+  .wl-row { padding-left: 20px; }
+  .wl.is-done .wl-say { font-size: 15px; padding: 10px 20px; }
   .wm { height: 19px; }
   .trio { height: 560px; margin-top: 52px; }
   .trio .p-mid { --pw: 282px; margin-left: -141px; }
