@@ -74,7 +74,6 @@ a { color: inherit; }
 .btn .i { width: 19px; height: 19px; }
 .btn-dark { background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 26px -12px rgba(10,30,25,.55); }
 a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 30px -12px rgba(10,30,25,.55); }
-.btn-dark.is-soon { cursor: default; }
 .btn-ghost { color: var(--ink); background: rgba(255,255,255,.55); border: 1px solid var(--line); }
 .btn-ghost:hover { background: #fff; border-color: #d9d2c6; transform: translateY(-1px); }
 .btn-ghost .i { width: 17px; height: 17px; color: var(--ink2); transition: transform .3s var(--ease); }
@@ -82,6 +81,38 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 .btn-sm { height: 40px; padding: 0 17px; font-size: 14.5px; }
 .btn-light { background: #fff; color: var(--ever3); }
 .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+
+/* ── the waitlist (Galus, 20 October 2026): one white pill, the email and the button in it, and a line under it that
+   says what happens and, once sent, what happened. Without a script only the line shows. ── */
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.wl { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(470px, 100%); margin: 0; }
+.wl-row { display: flex; align-items: center; gap: 6px; width: 100%; padding: 4px; border-radius: 999px; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 12px 30px -18px rgba(10,30,25,.4); transition: border-color .2s, box-shadow .2s; }
+.wl-row:focus-within { border-color: var(--ever); box-shadow: 0 0 0 3px rgba(14,95,85,.16), 0 12px 30px -18px rgba(10,30,25,.4); }
+.wl-in { flex: 1; min-width: 0; height: 44px; padding: 0 6px 0 18px; border: 0; background: transparent; color: var(--ink); font: 400 16px/1 Inter, sans-serif; letter-spacing: -.005em; outline: none; }
+.wl-in::placeholder { color: var(--ink3); opacity: 1; }
+.wl .wl-go { height: 44px; padding: 0 20px; font-size: 15.5px; border: 0; cursor: pointer; }
+.wl .wl-go:hover { background: #142a23; }
+.wl .wl-go:disabled { opacity: .72; cursor: progress; }
+.wl-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.wl-say { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 0; font-size: 14.5px; line-height: 1.4; color: var(--ink2); text-align: center; outline: none; }
+.wl-say span { text-wrap: balance; }
+.wl-say .i { width: 17px; height: 17px; color: var(--ink3); }
+.wl-say .i-ok, .wl[data-state]:not([data-state="idle"]) .wl-say .i-soon { display: none; }
+.wl[data-state="invalid"] .wl-row { border-color: var(--coral2); }
+.wl[data-state="invalid"] .wl-say, .wl[data-state="error"] .wl-say, .wl[data-state="slow_down"] .wl-say { color: #B4432A; }
+.wl.is-done .wl-row { display: none; }
+.wl.is-done .wl-say { min-height: 54px; padding: 8px 24px; border-radius: 999px; background: var(--soft); color: var(--ever2); font-size: 15.5px; font-weight: 500; }
+.wl.is-done .wl-say .i-ok { display: block; width: 20px; height: 20px; color: var(--ever); }
+html:not(.js) .wl-row { display: none; }
+.get-card .wl .wl-go { background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+.get-card .wl-row { border-color: transparent; box-shadow: 0 18px 36px -18px rgba(0,0,0,.55); }
+.get-card .wl-row:focus-within { box-shadow: 0 0 0 3px rgba(168,230,214,.45), 0 18px 36px -18px rgba(0,0,0,.55); }
+.get-card .wl-say { color: rgba(255,255,255,.74); }
+.get-card .wl-say .i { color: rgba(255,255,255,.6); }
+.get-card .wl.is-done .wl-say { background: rgba(168,230,214,.14); color: var(--mint); }
+.get-card .wl.is-done .wl-say .i-ok { color: var(--mint); }
+.get-card .wl[data-state="invalid"] .wl-say, .get-card .wl[data-state="error"] .wl-say, .get-card .wl[data-state="slow_down"] .wl-say { color: #FFC3B4; }
 
 /* ── nav ── */
 .nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background-color .3s, box-shadow .3s, backdrop-filter .3s; }
@@ -475,6 +506,9 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
   .ctas { margin-top: 26px; }
   .btn { height: 52px; padding: 0 22px; font-size: 15.5px; }
   .nav .btn-sm { height: 38px; padding: 0 14px; font-size: 14px; }
+  .wl .wl-go { padding: 0 16px; font-size: 15px; }
+  .wl-in { padding-left: 16px; }
+  .wl-say { font-size: 14px; }
   .wm { height: 19px; }
   .trio { height: 560px; margin-top: 52px; }
   .trio .p-mid { --pw: 282px; margin-left: -141px; }
@@ -557,7 +591,11 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
     <p class="pill rise" style="--d:0"><i class="live" aria-hidden="true"></i>Now watching 1,258 new-grad residencies</p>
     <h1 class="h1"><span class="rise" style="--d:1">Find new-grad RN residencies.</span> <span class="rise accent" style="--d:2">Ace your nursing exams.</span></h1>
     <p class="lede rise" style="--d:3">Every residency in all 50 states, with dates confirmed on each hospital’s own page. And <span class="nw">board-style</span> practice for the NCLEX, NP, CRNA and midwifery boards.</p>
-    <div class="ctas rise" style="--d:4"><span class="btn btn-dark is-soon" role="note"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><span>Coming soon on iPhone</span></span><a class="btn btn-ghost" href="#how">How it works <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div>
+    <div class="ctas rise" style="--d:4"><form class="wl" data-source="hero" novalidate>
+<div class="wl-row"><label class="vh" for="wl-hero">Your email address</label><input class="wl-in" id="wl-hero" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" placeholder="Your email" required><button class="btn btn-dark wl-go" type="submit">Join the waitlist</button></div>
+<div class="wl-hp" aria-hidden="true"><label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+<p class="wl-say" role="status" tabindex="-1"><svg class="i i-soon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><svg class="i i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m8 12.4 2.7 2.6L16.2 9.5"/></svg><span>Coming soon on iPhone. We’ll email you the day it’s out.</span></p>
+</form><a class="btn btn-ghost" href="#how">How it works <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div>
   </div>
   <div class="trio" aria-label="The Vibe Nursing app">
     <figure class="phone p-left" style="--bar:#F7F4EF;--sb:#0B1512">
@@ -818,7 +856,11 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 </div>
       <h2 class="h2">Your residency is out there.<br><span>Let Scrub watch for it.</span></h2>
       <p class="body">Free to start. Made for nursing students and new grads.</p>
-      <div class="ctas"><span class="btn btn-dark is-soon" role="note"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><span>Coming soon on iPhone</span></span></div>
+      <div class="ctas"><form class="wl" data-source="get" novalidate>
+<div class="wl-row"><label class="vh" for="wl-get">Your email address</label><input class="wl-in" id="wl-get" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" placeholder="Your email" required><button class="btn btn-dark wl-go" type="submit">Join the waitlist</button></div>
+<div class="wl-hp" aria-hidden="true"><label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+<p class="wl-say" role="status" tabindex="-1"><svg class="i i-soon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><svg class="i i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="m8 12.4 2.7 2.6L16.2 9.5"/></svg><span>Coming soon on iPhone. We’ll email you the day it’s out.</span></p>
+</form></div>
     </div>
   </div>
 </section>
@@ -831,7 +873,8 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
   </div>
   <div class="wrap foot-fine"><p>© 2026 Vibe Nursing. Program counts as of 17 October 2026. Hospital and health system names identify the residency programs we list; Vibe Nursing is not affiliated with or endorsed by them. NCLEX-RN® and NCLEX-PN® are registered trademarks of the National Council of State Boards of Nursing, Inc. (NCSBN). The National Certification Examination for nurse anesthetists is administered by the NBCRNA. The certification examination for nurse-midwives and midwives is administered by the American Midwifery Certification Board (AMCB). NP credentials are administered by the AANP Certification Board and the ANCC. Vibe Nursing is not affiliated with, endorsed by, licensed by or sponsored by any of these organizations. We generate original practice questions modeled on publicly published test plans. We do not reproduce, and have no access to, any live exam item.</p></div>
 </footer>
-<script>/* vibenursing.com: what moves. No libraries, no storage, no requests; with reduced motion, nothing animates. */
+<script>/* vibenursing.com: what moves, and the waitlist form. No libraries, no storage, and one request: the email someone
+   chooses to send to the waitlist. With reduced motion, nothing animates. */
 (function () {
   var doc = document;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -932,6 +975,60 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
     t.addEventListener('focus', say);
     t.addEventListener('mouseleave', function () { out.innerHTML = idle; });
     t.addEventListener('blur', function () { out.innerHTML = idle; });
+  });
+
+  /* the waitlist (Galus, 20 October 2026). build-site.js puts the waitlist function's address and the project's public
+     key in place of the placeholder below. The address goes nowhere but there; nothing is kept in the browser. An address already on
+     the list hears "joined" too, so the form cannot tell anyone who signed up. */
+  var WL = {"url":"https://rqnlzkktwnkurdmfzxhw.supabase.co/functions/v1/waitlist","key":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJxbmx6a2t0d25rdXJkbWZ6eGh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzNjMyODAsImV4cCI6MjEwNTkzOTI4MH0.fojOn_HAw9AVPSlzt2oYqCl6MniIZ81FTq6xEvsSwdc","help":"support@vibenursing.com"};
+  var forms = $$('form.wl');
+  var HELP = WL.help ? ', or email ' + WL.help : '';
+  var SAY = {
+    sending: 'Adding you to the list…',
+    joined: 'You’re on the list. We’ll email you the day it’s out.',
+    invalid: 'That doesn’t look like an email address. Check it and try again.',
+    slow_down: 'Too many tries from this connection. Try again in an hour' + HELP + '.',
+    error: 'We couldn’t add you just now. Try again soon' + HELP + '.'
+  };
+  var show = function (f, state, focus) {
+    var line = $('.wl-say', f), say = $('.wl-say span', f), input = $('.wl-in', f);
+    if (!f.dataset.idle) f.dataset.idle = say.textContent;
+    f.dataset.state = state;
+    f.classList.toggle('is-done', state === 'joined');
+    $('.wl-go', f).disabled = state === 'sending';
+    input.setAttribute('aria-invalid', state === 'invalid' ? 'true' : 'false');
+    say.textContent = SAY[state] || f.dataset.idle;
+    if (state === 'invalid') input.focus();
+    if (state === 'joined' && focus) line.focus({ preventScroll: true });
+  };
+  forms.forEach(function (f) {
+    var input = $('.wl-in', f), trap = f.querySelector('[name="website"]');
+    input.addEventListener('input', function () { if (f.dataset.state === 'invalid') show(f, 'idle'); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (f.dataset.state === 'sending') return;
+      var email = input.value.trim();
+      if (!/^[^@\s]{1,64}@[^@\s]+\.[A-Za-z]{2,}$/.test(email) || email.length > 254) { show(f, 'invalid'); return; }
+      show(f, 'sending');
+      var stop = 'AbortController' in window ? new AbortController() : null;
+      var timer = setTimeout(function () { if (stop) stop.abort(); }, 15000);
+      fetch(WL.url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', apikey: WL.key, authorization: 'Bearer ' + WL.key },
+        body: JSON.stringify({ email: email, source: f.dataset.source, website: trap ? trap.value : '' }),
+        credentials: 'omit',
+        referrerPolicy: 'no-referrer',
+        signal: stop ? stop.signal : undefined
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }); })
+        .then(function (b) {
+          var st = b && b.status;
+          if (st === 'joined' || st === 'already') forms.forEach(function (g) { show(g, 'joined', g === f); });
+          else show(f, st === 'invalid' || st === 'slow_down' ? st : 'error');
+        })
+        .catch(function () { show(f, 'error'); })
+        .then(function () { clearTimeout(timer); });
+    });
   });
 
   /* the hero's phones drift apart a little as the page scrolls */

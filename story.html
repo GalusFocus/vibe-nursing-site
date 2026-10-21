@@ -74,7 +74,6 @@ a { color: inherit; }
 .btn .i { width: 19px; height: 19px; }
 .btn-dark { background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 26px -12px rgba(10,30,25,.55); }
 a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 30px -12px rgba(10,30,25,.55); }
-.btn-dark.is-soon { cursor: default; }
 .btn-ghost { color: var(--ink); background: rgba(255,255,255,.55); border: 1px solid var(--line); }
 .btn-ghost:hover { background: #fff; border-color: #d9d2c6; transform: translateY(-1px); }
 .btn-ghost .i { width: 17px; height: 17px; color: var(--ink2); transition: transform .3s var(--ease); }
@@ -82,6 +81,38 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 .btn-sm { height: 40px; padding: 0 17px; font-size: 14.5px; }
 .btn-light { background: #fff; color: var(--ever3); }
 .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+
+/* ── the waitlist (Galus, 20 October 2026): one white pill, the email and the button in it, and a line under it that
+   says what happens and, once sent, what happened. Without a script only the line shows. ── */
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.wl { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(470px, 100%); margin: 0; }
+.wl-row { display: flex; align-items: center; gap: 6px; width: 100%; padding: 4px; border-radius: 999px; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 12px 30px -18px rgba(10,30,25,.4); transition: border-color .2s, box-shadow .2s; }
+.wl-row:focus-within { border-color: var(--ever); box-shadow: 0 0 0 3px rgba(14,95,85,.16), 0 12px 30px -18px rgba(10,30,25,.4); }
+.wl-in { flex: 1; min-width: 0; height: 44px; padding: 0 6px 0 18px; border: 0; background: transparent; color: var(--ink); font: 400 16px/1 Inter, sans-serif; letter-spacing: -.005em; outline: none; }
+.wl-in::placeholder { color: var(--ink3); opacity: 1; }
+.wl .wl-go { height: 44px; padding: 0 20px; font-size: 15.5px; border: 0; cursor: pointer; }
+.wl .wl-go:hover { background: #142a23; }
+.wl .wl-go:disabled { opacity: .72; cursor: progress; }
+.wl-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.wl-say { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 0; font-size: 14.5px; line-height: 1.4; color: var(--ink2); text-align: center; outline: none; }
+.wl-say span { text-wrap: balance; }
+.wl-say .i { width: 17px; height: 17px; color: var(--ink3); }
+.wl-say .i-ok, .wl[data-state]:not([data-state="idle"]) .wl-say .i-soon { display: none; }
+.wl[data-state="invalid"] .wl-row { border-color: var(--coral2); }
+.wl[data-state="invalid"] .wl-say, .wl[data-state="error"] .wl-say, .wl[data-state="slow_down"] .wl-say { color: #B4432A; }
+.wl.is-done .wl-row { display: none; }
+.wl.is-done .wl-say { min-height: 54px; padding: 8px 24px; border-radius: 999px; background: var(--soft); color: var(--ever2); font-size: 15.5px; font-weight: 500; }
+.wl.is-done .wl-say .i-ok { display: block; width: 20px; height: 20px; color: var(--ever); }
+html:not(.js) .wl-row { display: none; }
+.get-card .wl .wl-go { background: #0F1C18; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+.get-card .wl-row { border-color: transparent; box-shadow: 0 18px 36px -18px rgba(0,0,0,.55); }
+.get-card .wl-row:focus-within { box-shadow: 0 0 0 3px rgba(168,230,214,.45), 0 18px 36px -18px rgba(0,0,0,.55); }
+.get-card .wl-say { color: rgba(255,255,255,.74); }
+.get-card .wl-say .i { color: rgba(255,255,255,.6); }
+.get-card .wl.is-done .wl-say { background: rgba(168,230,214,.14); color: var(--mint); }
+.get-card .wl.is-done .wl-say .i-ok { color: var(--mint); }
+.get-card .wl[data-state="invalid"] .wl-say, .get-card .wl[data-state="error"] .wl-say, .get-card .wl[data-state="slow_down"] .wl-say { color: #FFC3B4; }
 
 /* ── nav ── */
 .nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background-color .3s, box-shadow .3s, backdrop-filter .3s; }
@@ -475,6 +506,9 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
   .ctas { margin-top: 26px; }
   .btn { height: 52px; padding: 0 22px; font-size: 15.5px; }
   .nav .btn-sm { height: 38px; padding: 0 14px; font-size: 14px; }
+  .wl .wl-go { padding: 0 16px; font-size: 15px; }
+  .wl-in { padding-left: 16px; }
+  .wl-say { font-size: 14px; }
   .wm { height: 19px; }
   .trio { height: 560px; margin-top: 52px; }
   .trio .p-mid { --pw: 282px; margin-left: -141px; }
@@ -659,7 +693,7 @@ a.btn-dark:hover { background: #142a23; transform: translateY(-1px); box-shadow:
 </article>
 <section class="get small"><div class="wrap"><div class="get-card">
   <h2 class="h2">Find new-grad RN residencies.<br><span>Ace your nursing exams.</span></h2>
-  <div class="ctas"><span class="btn btn-dark is-soon" role="note"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><span>Coming soon on iPhone</span></span></div>
+  <div class="ctas"><a class="btn btn-dark" href="./#get"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg><span>Join the iPhone waitlist</span></a></div>
 </div></div></section>
 </main>
 <footer class="foot">
